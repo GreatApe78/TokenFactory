@@ -24,11 +24,12 @@ contract ERC721Template is ERC721URIStorage, Ownable {
     }
 
     function mintNFT() public {
-        string memory newTokenUri;
+        string memory imageUri;
         uint256 tokenId = _tokenCounter.current();
+        string memory newTokenUri;
         
-        newTokenUri = string(abi.encodePacked(getIpfsCollection(),tokenId.toString(),getImageFileExtension()));
-        
+        imageUri = string(abi.encodePacked(getIpfsCollection(),tokenId.toString(),getImageFileExtension()));
+        newTokenUri = defineTokenUri(imageUri);
         _safeMint(msg.sender, tokenId);
         _setTokenURI(tokenId, newTokenUri);
         
@@ -55,6 +56,16 @@ contract ERC721Template is ERC721URIStorage, Ownable {
         _imageFileExtension = newFileExtension;
     }
 
+    function defineTokenUri(string memory imageUri) internal pure returns(string memory){
+        string memory prefix = "data:application/json;base64,";
+
+        string memory sampleJson = string(abi.encodePacked('{"name": " Sample name","image": "',imageUri,'","description": "Sample description"}'));
+
+        string memory encodedJson = string(Base64.encode(bytes(sampleJson)));
+
+        return string(abi.encodePacked(prefix,encodedJson));
+
+    }
 
 }
 
