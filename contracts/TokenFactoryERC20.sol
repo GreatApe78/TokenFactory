@@ -2,22 +2,16 @@
 pragma solidity ^0.8.2;
 
 import "./ERC20Template.sol";
-import "./ERC721Template.sol";
 
-contract TokenFactory {
+
+contract TokenFactoryERC20 {
     mapping(address => ERC20Template[]) allERC20Of;
-    mapping(address => ERC721Template[]) allERC721Of;
+
     event DeployedERC20(
         address indexed owner,
         string name,
         string symbol,
         uint256 indexed initialSupply,
-        uint256 timestamp
-    );
-    event DeployedERC721(
-        address indexed owner,
-        string name,
-        string symbol,
         uint256 timestamp
     );
 
@@ -42,7 +36,7 @@ contract TokenFactory {
         );
     }
 
-    function readERC20Owner(
+/*     function readERC20Owner(
         address _erc20Address
     ) public view returns (address) {
         for (uint256 i = 0; i < allERC20Of[msg.sender].length; i++) {
@@ -52,7 +46,7 @@ contract TokenFactory {
         }
         return address(0);
     }
-
+ */
     function erc20BalanceOf(
         address _erc20Address
     ) public view returns (uint256) {
@@ -80,4 +74,6 @@ contract TokenFactory {
     ) public view returns (uint256) {
         return ERC20Template(_erc20Address).totalSupply();
     }
+
+
 }
