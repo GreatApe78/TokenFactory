@@ -11,7 +11,7 @@ contract ERC721Template is ERC721URIStorage,Ownable {
 
     
     string private _ipfsCollection;
-    
+    uint256 private _tokenCounter;
     string private _imageFileExtension;
 
 
@@ -30,9 +30,13 @@ contract ERC721Template is ERC721URIStorage,Ownable {
 
     }
 
-    function setIpfsCollection() external  onlyOwner(){}
+    function setIpfsCollection(string memory newCollectionUrl) external  onlyOwner(){
+        _ipfsCollection = newCollectionUrl;
+    }
 
-
+    function getTokenCounter() public view returns(uint256){
+        return _tokenCounter;
+    }
 
 
 
